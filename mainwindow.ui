@@ -20,9 +20,23 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_4">
         <item>
+         <widget class="QPushButton" name="Init">
+          <property name="text">
+           <string>Init</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="Start">
           <property name="text">
            <string>Start</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="Stop">
+          <property name="text">
+           <string>Stop</string>
           </property>
          </widget>
         </item>
@@ -56,10 +70,16 @@
         <item>
          <widget class="QSpinBox" name="spinBox">
           <property name="minimum">
-           <number>10</number>
+           <number>2</number>
           </property>
           <property name="maximum">
-           <number>1001</number>
+           <number>100001</number>
+          </property>
+          <property name="singleStep">
+           <number>0</number>
+          </property>
+          <property name="value">
+           <number>1000</number>
           </property>
          </widget>
         </item>

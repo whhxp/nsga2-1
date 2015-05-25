@@ -4,6 +4,7 @@
 #include <individual.h>
 #include <string>
 #include <iterator>
+#include <qdebug.h>
 
 #include <exprtk.hpp>
 
@@ -32,6 +33,10 @@ public:
     void fast_non_dominated_sort();
     void init_population(double min, double max);
     bool dominates(Individual *p, Individual *q);
+    void BinaryTournamentSelection();
+    void MainLoop();
+    void setZero();
+
     Nsga2(int n, int t);
     void evaluation();
     vector<list<Individual *>*> F;

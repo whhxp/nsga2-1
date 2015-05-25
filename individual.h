@@ -7,6 +7,9 @@
 
 using namespace std;
 
+
+
+
 class Individual
 {
 
@@ -31,12 +34,12 @@ public:
     int rank;
 
     // odległość
-    int d;
+    double d;
 
 
-    static bool compare1( const Individual &a, const Individual &b);
+    static bool compare1(const Individual *a, const Individual *b);
 
-    static bool compare2(const Individual &a, const Individual &b);
+    static bool compare2(const Individual *a, const Individual *b);
 
     void setX1(double x);
     void setX2(double x);
@@ -52,8 +55,16 @@ public:
     double getY2() const;
     double getX1() const;
     double getX2() const;
+    int getRank() const;
+    double getD() const;
 
-    void show();
+
+    static Individual* crossover1(Individual *p1, Individual *p2);
+    static Individual* mutation(Individual *p, double min, double max);
+    static Individual* crossover2(Individual *p1, Individual *p2);
+
+   static bool crowded_comparison_operator(Individual *p, Individual *q);
+    void show() const;
 };
 
 #endif // INDIVIDUAL_H

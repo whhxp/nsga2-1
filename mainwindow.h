@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QTimer>
 
 #include <individual.h>
 #include <nsga2.h>
@@ -24,10 +25,13 @@ public:
 
 public slots:
     void Nsga();
+    void Init();
 protected slots:
     void makePlot(vector<double> y1, vector<double> y2, vector<double> y1f0, vector<double> y2f0);
 private:
     Ui::MainWindow *ui;
+    Nsga2 *nsga2;
+    QTimer *timer;
 };
 
 #endif // MAINWINDOW_H
