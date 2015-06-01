@@ -17,12 +17,27 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     individual.cpp \
     nsga2.cpp \
-    qcustomplot.cpp
+    qcustomplot.cpp \
+    muParser.cpp \
+    muParserBase.cpp \
+    muParserBytecode.cpp \
+    muParserCallback.cpp \
+    muParserError.cpp \
+    muParserTokenReader.cpp
 
 HEADERS  += mainwindow.h \
     individual.h \
     nsga2.h \
-    exprtk.hpp \
-    qcustomplot.h
+    qcustomplot.h \
+    muParser.h \
+    muParserBase.h \
+    muParserBytecode.h \
+    muParserCallback.h \
+    muParserDef.h \
+    muParserError.h \
+    muParserFixes.h \
+    muParserStack.h \
+    muParserToken.h \
+    muParserTokenReader.h
 
 FORMS    += mainwindow.ui

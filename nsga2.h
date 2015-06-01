@@ -6,50 +6,72 @@
 #include <iterator>
 #include <qdebug.h>
 
-#include <exprtk.hpp>
+
+#include <vector>
+
+#include <muParser.h>
+
+using namespace mu;
 
 using namespace std;
 
 class Nsga2
 {
-    int N;
+    unsigned int N;
     int M;
-    int t;
     int T;
+
+    double mum;
+    double mu;
+    double corrosoverToMutation;
+    int k = 4;
+
 
     list<Individual *> P;
     list<Individual *> Q;
 
-    /*
-    void make_new_pop();
-    void main_loop();
-    void mutation();
-    void crossover();
-    void evaluation();
-    */
+    string str1;
+    string str2;
+
+    int v1;
+    int v2;
+    int v_max;
+
+    double a;
+    double b;
+
+    vector<double> min;
+    vector<double> max;
+
 
 public:
+
+    Individual *ReturnBeter();
     void crowding_distance_assigment();
     void fast_non_dominated_sort();
-    void init_population(double min, double max);
+    void init_population();
     bool dominates(Individual *p, Individual *q);
     void BinaryTournamentSelection();
     void MainLoop();
     void setZero();
 
-    Nsga2(int n, int t);
+    Nsga2(unsigned int n, double corrosoverToMutation, double MU, double MUM, string s1, int zv1, string s2, int zv2, vector<double> Min, vector<double> Max);
     void evaluation();
+    void exe1();
+    void exe2();
     vector<list<Individual *>*> F;
-    void show();
 
     vector<double> returnY1();
     vector<double> returnY2();
 
     vector<double> returnY1F0();
     vector<double> returnY2F0();
+    bool Pareto();
 
-//    vector<double> returnX1();
-//    vector<double> returnX2();
+    string toStringF1(int f);
+
+    string toStringMinMax() const;
+
 };
 
 #endif // NSGA2_H

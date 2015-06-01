@@ -1,32 +1,35 @@
 #include "nsga2.h"
 
-//typedef exprtk::symbol_table<double> symbol_table_t;
-//typedef exprtk::expression<double> expression_t;
-//typedef exprtk::parser<double> parser_t;
-//typedef exprtk::parser_error::type error_t;
 
-Nsga2::Nsga2(int n, int t)
-    :N(n), T(t)
-{}
 
-void Nsga2::init_population(double min, double max)
+
+Nsga2::Nsga2(unsigned int n,double CorrosoverToMutation,double MU, double MUM, string s1, int zv1, string s2, int zv2, vector<double> Min, vector<double> Max)
+    :N(n),corrosoverToMutation(CorrosoverToMutation), mu(MU),mum(MUM), str1(s1), str2(s2), v1(zv1), v2(zv2), min(Min), max(Max)
+{
+    v_max = v1 > v2 ? v1 : v2;
+}
+
+void Nsga2::init_population()
 {
     for(int i = 0; i < N; i++)
     {
-        Individual *p = new Individual();
+        Individual *p = new Individual(v1,v2);
         p->setRandX(min, max);
         P.push_front(p);
     }
 }
 
-/*!
- * \brief Nsga2::dominates
- * Funkcma zwraca 1 wtedy gdy rozwiązanie p dominume nad rozwiązanie q
- * Minimalizacma funkcmi celu
- * \param p
- * \param q
- * \return
- */
+template <typename T> bool Comp1(const T * const & a, const T * const & b)
+{
+   return a->getY1() > b->getY1();
+}
+
+template <typename T> bool Comp2(const T * const & a, const T * const & b)
+{
+   return a->getY2() > b->getY2();
+}
+
+
 bool Nsga2::dominates(Individual *p, Individual *q)
 {
     double py1 = p->getY1();
@@ -93,27 +96,70 @@ void Nsga2::fast_non_dominated_sort()
 
 void Nsga2::evaluation()
 {
+    Parser f1;
+    Parser f2;
+    double *tab = new double[v_max];
+    vector<double> x;
+
     for(list<Individual *>::iterator iter = P.begin(); iter != P.end();iter++ )
     {
-        double x1 = (*iter)->getX1();
-        double x2 = (*iter)->getX2();
 
-        (*iter)->setY1( 4*x1*x1 + 4*x2*x2 );
-        (*iter)->setY2((x1-5)*(x1-5) + (x2-5)*(x2-5));
 
-    }
-}
+        x = (*iter)->getX();
 
-void Nsga2::show()
-{
-//    for(list<Individual *>::iterator p = F[0]->begin(); p != F[0]->end(); p++)
-//    {
-//        (*p)->show();
-//    }
+        for(int i = 0; i < v_max; i++)
+        {
+            tab[i] = x[i];
+        }
 
-    for(list<Individual *>::iterator p = P.begin(); p != P.end(); p++)
-    {
-        (*p)->show();
+        const string table[] = {"x","y","z","g","h"};
+
+        try
+        {
+
+            for(int i = 0; i < v1; i++)
+            {
+                f1.DefineVar(table[i], &(tab[i]));
+            }
+            f1.SetExpr(str1);
+        }
+        catch (Parser::exception_type &e)
+        {
+            qDebug() << "Problem funkcja 1" << endl;
+        }
+
+        try
+        {
+            for(int i = 0; i < v2; i++)
+            {
+                f2.DefineVar(table[i], &(tab[i]));
+            }
+            f2.SetExpr(str2);
+        }
+        catch (Parser::exception_type &e)
+        {
+            qDebug() << "Problem funkcja 1" << endl;
+        }
+
+        try
+        {
+            (*iter)->setY1(f1.Eval());
+        }
+        catch(Parser::exception_type &e)
+        {
+            qDebug() << "Wywolanie funkcji f1" << endl;
+            qDebug() <<  QString().fromStdString( e.GetMsg()) << endl;
+        }
+
+        try
+        {
+            (*iter)->setY2(f2.Eval());
+        }
+        catch(Parser::exception_type &e)
+        {
+            qDebug() << "Wywolanie funkcji f2" << endl;
+            qDebug() <<  QString().fromStdString( e.GetMsg()) << endl;
+        }
     }
 }
 
@@ -127,6 +173,7 @@ vector<double> Nsga2::returnY1()
     return y1;
 }
 
+
 vector<double> Nsga2::returnY2()
 {
     vector<double> y2;
@@ -135,13 +182,43 @@ vector<double> Nsga2::returnY2()
         y2.push_back( (*p)->getY2() );
     }
 
-//    for(unsigned int i = 0; i < y2.size();i++)
-//    {
-//        qDebug() << y2[i] << endl;
-//    }
-
-
     return y2;
+}
+
+
+string Nsga2::toStringF1(int f)
+{
+
+    list<Individual *> wypis;
+    for(list<Individual *>::iterator p = P.begin(); p != P.end(); p++)
+    {
+        if((*p)->rank == 0)
+        {
+            wypis.push_back(*p);
+        }
+    }
+
+    if(f == 0)
+    {
+        wypis.sort(Comp1<Individual>);
+    }
+    else if(f == 1)
+    {
+        wypis.sort(Comp2<Individual>);
+    }
+
+    stringstream stream;
+    int i = 1;
+    for(list<Individual *>::iterator p = wypis.begin(); p != wypis.end(); p++)
+    {
+        if((*p)->rank == 0)
+        {
+            stream << i << ". " << (*p)->toStringX()<< (*p)->toStringY() << " d: " << (*p)->getD() << " rank: " << (*p)->getRank() << endl;
+            i++;
+        }
+    }
+
+    return stream.str();
 }
 
 vector<double> Nsga2::returnY1F0()
@@ -172,23 +249,11 @@ vector<double> Nsga2::returnY2F0()
 
 
 
-template <typename T> bool Comp1(const T * const & a, const T * const & b)
-{
-   return a->getY1() > b->getY1();
-}
-
-template <typename T> bool Comp2(const T * const & a, const T * const & b)
-{
-   return a->getY2() > b->getY2();
-}
-
 void Nsga2::crowding_distance_assigment()
 {
 
     for(unsigned int i = 0; i < F.size()-1;i++)
     {
-        double min = 0;
-        double max = 0;
 
         for(list<Individual*>::iterator I = F[i]->begin(); I != F[i]->end();I++)
         {
@@ -201,8 +266,8 @@ void Nsga2::crowding_distance_assigment()
             {
                 F[i]->sort( Comp1<Individual>);
 
-                min = F[i]->back()->getY1();
-                max = F[i]->front()->getY1();
+                //min = F[i]->back()->getY1();
+                //max = F[i]->front()->getY1();
 
                 F[i]->back()->d = INT_MAX;
                 F[i]->front()->d = INT_MAX;
@@ -217,8 +282,8 @@ void Nsga2::crowding_distance_assigment()
             {
                 F[i]->sort( Comp2<Individual>);
 
-                min = F[i]->back()->getY2();
-                max = F[i]->front()->getY2();
+                //min = F[i]->back()->getY2();
+                //max = F[i]->front()->getY2();
 
                 F[i]->back()->d = INT_MAX;
                 F[i]->front()->d = INT_MAX;
@@ -245,35 +310,12 @@ void Nsga2::crowding_distance_assigment()
                 }
             }
 
-//            qDebug() << " --------------------" << endl;
-//            qDebug() << "min:" << min << "max:" << max << endl;
-//            qDebug() << " i = " << i << endl;
-//            qDebug() << " --------------------" << endl;
-//            show();
         }
     }
 }
 
-void Nsga2::BinaryTournamentSelection()
-{
-    std::random_device generator;
-    std::uniform_int_distribution<int> distribution(0,N-1);
-
-    while(Q.size() < N)
-    {
-        int alfa = distribution(generator);
-        list<Individual*>::iterator p1 = next(P.begin(),alfa);
-        int beta = distribution(generator);
-        list<Individual*>::iterator q1 = next(P.begin(),beta);
-
-        Q.push_back(Individual::crossover1(*p1,*q1));
-        //Q.push_back(Individual::crossover2(*p1,*q1));
-        Q.push_back(Individual::mutation(*p1,0,5));
-    }
-}
-
-
-template <typename T> bool crowded_comparison_operator(const T * const & p, const T * const & q)
+template <typename T>
+bool crowded_comparison_operator(const T * const & p, const T * const & q)
 {
     if( p->getRank() < q->getRank()) return true;
     else if(p->getRank() == q->getRank())
@@ -284,25 +326,119 @@ template <typename T> bool crowded_comparison_operator(const T * const & p, cons
     else if( p->getRank() > q->getRank()) return false;
 }
 
+void Nsga2::BinaryTournamentSelection()
+{
+    int i = 0;
+    int j = 1;
+
+    std::random_device generator;
+    std::uniform_real_distribution<double> udistribution(0,1); //generowanie liczb p-losowych z zakresu 0.0 - 1.0
+    while(Q.size() < N)
+    {
+
+
+        list<Individual*>::iterator p1 = next(P.begin(),i);
+        list<Individual*>::iterator q1 = next(P.begin(),j);
+
+//      Individual *p1 = ReturnBeter(); //next(P.begin(),i);
+//      Individual *q1 = ReturnBeter(); //next(P.begin(),j);
+        int alfa = udistribution(generator);
+        if(alfa < corrosoverToMutation)
+        {
+            Q.push_back(Individual::crossover(*p1,*q1,mu));
+            Q.push_back(Individual::crossover(*q1,*p1,mu));
+            qDebug() << "Crossover" << endl;
+        }
+        else
+        {
+            Q.push_back(Individual::mutation(*p1,mum,min,max));
+            Q.push_back(Individual::mutation(*q1,mum,min,max));
+            qDebug() << "Mutation" << endl;
+        }
+        i+=2;
+        j+=2;
+
+    }
+    //qDebug() << "ffffffffffff" << endl;
+
+    for(list<Individual *>::iterator p = P.begin(); p != P.end(); p++)
+    {
+        (*p)->setGeneticZero();
+    }
+
+    //qDebug() << "zzzzzzzzzzzzz" << endl;
+}
+
+
+Individual* Nsga2::ReturnBeter()
+{
+    k = 4;
+    list<Individual*> zbior;
+    std::random_device generator;
+    std::uniform_int_distribution<int> udistribution(0,N-1); //generowanie liczb p-losowych z zakresu 0.0 - 1.0
+    list<Individual*>::iterator iter;
+    int s = 0;
+    while(zbior.size() < k)
+    {
+        s = udistribution(generator);
+        iter =  next(P.begin(),s);
+        if(!((*iter)->getGenetic()))
+        {
+            zbior.push_back(*iter);
+            (*iter)->setGenetic();
+        }
+    }
+    zbior.sort(crowded_comparison_operator<Individual>);
+
+    Individual *w = zbior.front();
+    zbior.clear();
+    //qDebug() << "kkkkk"<< endl;
+    return w;
+}
+
+
+
 
 void Nsga2::MainLoop()
 {
-    BinaryTournamentSelection();
-    //qDebug() << "1. P size: " << P.size() << "Q size" << Q.size() << endl;
+    try
+    {
+        P.sort(crowded_comparison_operator<Individual>);
+
+        BinaryTournamentSelection();
+    }
+    catch (int i)
+    {
+        qDebug() << "MainLoop: BinaryTournamentSelection" << endl;
+
+    }
     P.splice(P.begin(),Q);
     Q.clear();
     setZero();
     evaluation();
     fast_non_dominated_sort();
-    //qDebug() << "2. P size: " << P.size() << "Q size" << Q.size() << endl;
     crowding_distance_assigment();
-    P.sort(crowded_comparison_operator<Individual>);
-    //qDebug() << "jflsjd;sljfafklfdkjfdkajlfdjkalfj" << endl;
-    while(P.size() > N ) P.pop_back();
-    //show();
-    t+= 1;
 
+
+    try
+    {
+        P.sort(crowded_comparison_operator<Individual>);
+    }
+    catch (int i)
+    {
+        qDebug() << "MainLoop: Sortowanie" << endl;
+
+    }
+
+    while(P.size() > N )
+    {
+
+        if( P.back() != NULL) delete P.back();
+        P.pop_back();
+    }
 }
+
+
 void Nsga2::setZero()
 {
     for(list<Individual*>::iterator iter = P.begin(); iter != P.end(); iter++)
@@ -315,18 +451,36 @@ void Nsga2::setZero()
 
     F.clear();
 
-//    for(vector<list<Individual*>*>::iterator i = F.begin(); i != F.end(); i++)
-//    {
-//        (*i)->clear();
-//    }
 }
 
-//vector<double> returnX1()
-//{
 
-//}
 
-//vector<double> returnX2()
-//{
+string Nsga2::toStringMinMax() const
+{
+    stringstream stream;
+    return stream.str();
+}
 
-//}
+bool Nsga2::Pareto()
+{
+    for(list<Individual*>::iterator iter = P.begin(); iter != P.end(); iter++)
+    {
+        if( (*iter)->rank != 0)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+void Nsga2::exe1()
+{
+
+}
+
+void Nsga2::exe2()
+{
+
+}
+
+
