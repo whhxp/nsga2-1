@@ -5,6 +5,9 @@
 #include <string>
 #include <iterator>
 #include <qdebug.h>
+#include <time.h>
+#include <stdlib.h>
+#include <float.h>
 
 
 #include <vector>
@@ -23,7 +26,9 @@ class Nsga2
 
     double mum;
     double mu;
-    double corrosoverToMutation;
+    double corrosover;
+    double mutation;
+    int offspring;
     int k = 4;
 
 
@@ -55,7 +60,7 @@ public:
     void MainLoop();
     void setZero();
 
-    Nsga2(unsigned int n, double corrosoverToMutation, double MU, double MUM, string s1, int zv1, string s2, int zv2, vector<double> Min, vector<double> Max);
+    Nsga2(unsigned int n,int Offspring, double Corrosover, double Mutation,  double MU, double MUM, string s1, int zv1, string s2, int zv2, vector<double> Min, vector<double> Max);
     void evaluation();
     void exe1();
     void exe2();

@@ -64,7 +64,7 @@ public:
     double getD() const ;
 
 
-    static Individual* crossover(Individual *p1, Individual *p2,double ota_c);
+    static Individual* crossover(Individual *p1, Individual *p2, double ota_c, vector<double> min, vector<double> max);
     static Individual* mutation(Individual *p,double ota_m, vector<double> min, vector<double> max);
 
     static bool crowded_comparison_operator(Individual *p, Individual *q);

@@ -1,12 +1,10 @@
 #include "nsga2.h"
 
-
-
-
-Nsga2::Nsga2(unsigned int n,double CorrosoverToMutation,double MU, double MUM, string s1, int zv1, string s2, int zv2, vector<double> Min, vector<double> Max)
-    :N(n),corrosoverToMutation(CorrosoverToMutation), mu(MU),mum(MUM), str1(s1), str2(s2), v1(zv1), v2(zv2), min(Min), max(Max)
+Nsga2::Nsga2(unsigned int n, int Offspring, double Corrosover, double Mutation, double MU, double MUM, string s1, int zv1, string s2, int zv2, vector<double> Min, vector<double> Max)
+    :N(n),offspring(Offspring),corrosover(Corrosover),mutation(Mutation) , mu(MU),mum(MUM), str1(s1), str2(s2), v1(zv1), v2(zv2), min(Min), max(Max)
 {
     v_max = v1 > v2 ? v1 : v2;
+    //srand( time(NULL));
 }
 
 void Nsga2::init_population()
@@ -21,12 +19,12 @@ void Nsga2::init_population()
 
 template <typename T> bool Comp1(const T * const & a, const T * const & b)
 {
-   return a->getY1() > b->getY1();
+   return a->getY1() >= b->getY1();
 }
 
 template <typename T> bool Comp2(const T * const & a, const T * const & b)
 {
-   return a->getY2() > b->getY2();
+   return a->getY2() >= b->getY2();
 }
 
 
@@ -161,6 +159,8 @@ void Nsga2::evaluation()
             qDebug() <<  QString().fromStdString( e.GetMsg()) << endl;
         }
     }
+
+    delete tab;
 }
 
 vector<double> Nsga2::returnY1()
@@ -269,8 +269,8 @@ void Nsga2::crowding_distance_assigment()
                 //min = F[i]->back()->getY1();
                 //max = F[i]->front()->getY1();
 
-                F[i]->back()->d = INT_MAX;
-                F[i]->front()->d = INT_MAX;
+                F[i]->back()->d = DBL_MAX;
+                F[i]->front()->d = DBL_MAX;
 
                 if(F[i]->size() == 2 || F[i]->size() == 1)
                 {
@@ -285,8 +285,8 @@ void Nsga2::crowding_distance_assigment()
                 //min = F[i]->back()->getY2();
                 //max = F[i]->front()->getY2();
 
-                F[i]->back()->d = INT_MAX;
-                F[i]->front()->d = INT_MAX;
+                F[i]->back()->d = DBL_MAX;
+                F[i]->front()->d = DBL_MAX;
 
                 if(F[i]->size() == 2 || F[i]->size() == 1)
                 {
@@ -330,43 +330,60 @@ void Nsga2::BinaryTournamentSelection()
 {
     int i = 0;
     int j = 1;
+    int z = 3;
+    double alfa = -1;
+    double beta = -1;
 
-    std::random_device generator;
-    std::uniform_real_distribution<double> udistribution(0,1); //generowanie liczb p-losowych z zakresu 0.0 - 1.0
-    while(Q.size() < N)
+    std::mt19937 e1(time(0));
+    std::uniform_real_distribution<> distribution(0,1); //generowanie liczb p-losowych z zakresu 0.0 - 1.0
+    while(Q.size() < offspring)
     {
 
 
-        list<Individual*>::iterator p1 = next(P.begin(),i);
-        list<Individual*>::iterator q1 = next(P.begin(),j);
+        list<Individual*>::iterator p = next(P.begin(),i);
+        list<Individual*>::iterator q = next(P.begin(),j);
+        list<Individual*>::iterator h = next(P.begin(),z);
+
 
 //      Individual *p1 = ReturnBeter(); //next(P.begin(),i);
 //      Individual *q1 = ReturnBeter(); //next(P.begin(),j);
-        int alfa = udistribution(generator);
-        if(alfa < corrosoverToMutation)
+        alfa =  distribution(e1);
+        if(alfa <= corrosover)
         {
-            Q.push_back(Individual::crossover(*p1,*q1,mu));
-            Q.push_back(Individual::crossover(*q1,*p1,mu));
-            qDebug() << "Crossover" << endl;
+            Q.push_back(Individual::crossover(*p,*q,mu,min,max));
+            Q.push_back(Individual::crossover(*q,*p,mu,min,max));
+            qDebug() << "Crossover" << alfa << endl;
         }
-        else
+
+        beta = distribution(e1);
+        if(beta <= mutation)
         {
-            Q.push_back(Individual::mutation(*p1,mum,min,max));
-            Q.push_back(Individual::mutation(*q1,mum,min,max));
-            qDebug() << "Mutation" << endl;
+                 Q.push_back(Individual::mutation(*h,mum,min,max));
+                 qDebug() << "Mutation" << beta << endl;
         }
-        i+=2;
-        j+=2;
+
+        i+=3;
+        j+=3;
+        z+=3;
+
+        if( i > (N-6) || j > (N-6) || z > (N-6))
+        {
+            i = 0;
+            j = 1;
+            z = 3;
+        }
+        qDebug() << "ppppp" << endl;
+
 
     }
-    //qDebug() << "ffffffffffff" << endl;
+    qDebug() << "ffffffffffff" << endl;
 
     for(list<Individual *>::iterator p = P.begin(); p != P.end(); p++)
     {
         (*p)->setGeneticZero();
     }
 
-    //qDebug() << "zzzzzzzzzzzzz" << endl;
+    qDebug() << "zzzzzzzzzzzzz" << endl;
 }
 
 
@@ -395,8 +412,6 @@ Individual* Nsga2::ReturnBeter()
     //qDebug() << "kkkkk"<< endl;
     return w;
 }
-
-
 
 
 void Nsga2::MainLoop()
@@ -447,12 +462,14 @@ void Nsga2::setZero()
         (*iter)->n = 0;
         (*iter)->S.clear();
         (*iter)->d = 0;
+        (*iter)->setY1(-1000);
+        (*iter)->setY2(-1000);
+
     }
 
     F.clear();
 
 }
-
 
 
 string Nsga2::toStringMinMax() const

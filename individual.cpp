@@ -92,12 +92,11 @@ bool Individual::compare2( const Individual *a, const Individual *b)
  * \param p2 szczesliwy rodzic II
  * \return mały gnojek
  */
-Individual* Individual::crossover(Individual *p1, Individual *p2, double ota_c)
+Individual* Individual::crossover(Individual *p1, Individual *p2, double ota_c, vector<double> min, vector<double> max)
 {
     Individual *nowy = new Individual(p1->v1,p1->v2);
     std::random_device generator;
     std::uniform_real_distribution<double> udistribution(0,1);
-    double alfa = 0;
     try
     {
 
@@ -111,14 +110,24 @@ Individual* Individual::crossover(Individual *p1, Individual *p2, double ota_c)
         double beta = 0;
         if(u < 0.5) beta = pow(2*u,1/(ota_c+1));
         else beta = 1/( pow(2*(1 - u),1/(ota_c+1)));
+        double z = 0;
 
 
         for(int i = 0; i < p1->v_max; i++)
         {
 
-                help.push_back(0.5*( (1 - beta) * px1[i] + (1 + beta) * px2[i])); // magia
-
-
+                z = 0.5*( (1 - beta) * px1[i] + (1 + beta) * px2[i]); // magia
+                if( z > max[i])
+                {
+                    z = max[i];
+                    help.push_back(z);
+                }
+                else if(z < min[i])
+                {
+                    z = min[i];
+                    help.push_back(z);
+                }
+                else help.push_back(z);
         }
         nowy->setX(help);
 
@@ -155,8 +164,16 @@ Individual* Individual::mutation(Individual *p, double ota_m, vector<double> min
     for(int i = 0; i < p->v_max; i++)
     {
         new_x = parent_x[i] + (max[i] - min[i]) * delta_k;
-        if( new_x > max[i]) new_x = max[i];
-        else if(new_x < min[i]) new_x = min[i];
+        if( new_x > max[i])
+        {
+            new_x = max[i];
+            x.push_back(new_x);
+        }
+        else if(new_x < min[i])
+        {
+            new_x = min[i];
+            x.push_back(new_x);
+        }
         else x.push_back(new_x);
     }
     nowy->setX(x); // ustawia argumenty

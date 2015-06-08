@@ -37,66 +37,25 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-   void MainWindow::exe2()
-   {
-       timer->stop();
-       init = 1;
-       if(nsga2 != NULL) delete nsga2;
-       ui->statusBar->showMessage(" Inicjalizacja populacji Zitzler-Deb-Thiele's function N.1  ", 1000);
-       min.clear();
-       max.clear();
 
-       min.push_back(-10);
-       min.push_back(-10);
 
-       max.push_back(10);
-       max.push_back(10);
-
-       str1 = "x^2";
-       str2 = "(x-2)^2";
-       v1 = 2;
-       v2 = 2;
-
-       nsga2 =  new  Nsga2(ui->spinBox->value(),ui->crossover->value(),ui->crossover_index->value(),ui->mutation_index->value(),str1,v1,str2,v2,min,max);
-       nsga2->init_population();
-       nsga2->evaluation();
-       nsga2->fast_non_dominated_sort();
-       nsga2->crowding_distance_assigment();
-
-       ui->textEdit->setText(QString().fromStdString(nsga2->toStringF1(f)));
-       qDebug() << "Inicjalizacja" << endl;
-       qDebug() << QString().fromStdString(nsga2->toStringF1(f)) << endl;
-
-       vector<double> y1 = nsga2->returnY1();
-       vector<double> y2 = nsga2->returnY2();
-
-       vector<double> y1f0 = nsga2->returnY1F0();
-       vector<double> y2f0 = nsga2->returnY2F0();
-
-       makePlot(y1, y2,y1f0,y2f0);
-   }
-
-void MainWindow::exe1()
+//Zitzler–Deb–Thiele's function N. 6
+void MainWindow::exe10()
 {
     timer->stop();
     init = 1;
     if(nsga2 != NULL) delete nsga2;
-    ui->statusBar->showMessage(" Inicjalizacja populacji funkcja Binh and Korn ", 1000);
-    min.clear();
-    max.clear();
+    ui->statusBar->showMessage(" Inicjalizacja populacji Zitzler–Deb–Thiele's function N. 6 ", 1000);
 
-    min.push_back(0);
-    min.push_back(0);
+    getRestrictions();
 
-    max.push_back(5);
-    max.push_back(3);
 
-    str1 = "4 * x^2 + 4 * y^2";
-    str2 = "(x-5)^2 + (y-5)^2";
-    v1 = 2;
-    v2 = 2;
+    str1 = " 1 - exp(-4*x) *( sin(6 * _pi * x ) )^6";
+    str2 = " ( 1 + 9 * ( (y + z + g + h) / 9 )^(0.25) ) * ( 1 - ( (1 - exp(-4*x) *( sin(6 * _pi * x ) )^6) / (1 + 9 * ( (y + z + g + h) / 9 )^(0.25) ) )^2 )";
+    v1 = 5;
+    v2 = 5;
 
-    nsga2 =  new  Nsga2(ui->spinBox->value(),ui->crossover->value(),ui->crossover_index->value(),ui->mutation_index->value(),str1,v1,str2,v2,min,max);
+    nsga2 =  new  Nsga2(ui->spinBox->value(),ui->offspring->value(),ui->crossover->value(),ui->mutation->value(),ui->crossover_index->value(),ui->mutation_index->value(),str1,v1,str2,v2,min,max);
     nsga2->init_population();
     nsga2->evaluation();
     nsga2->fast_non_dominated_sort();
@@ -115,34 +74,349 @@ void MainWindow::exe1()
     makePlot(y1, y2,y1f0,y2f0);
 }
 
+//Zitzler–Deb–Thiele's function N. 4
+void MainWindow::exe9()
+{
+    timer->stop();
+    init = 1;
+    if(nsga2 != NULL) delete nsga2;
+    ui->statusBar->showMessage(" Inicjalizacja populacji Zitzler–Deb–Thiele's function N. 4 ", 1000);
+
+    getRestrictions();
+
+
+    str1 = "x";
+    str2 = " (41 + ( (y^2 - 10*cos(4*_pi*y) ) + (z^2 - 10*cos(4*_pi*z) ) + (g^2 - 10*cos(4*_pi*g) ) +  (h^2 - 10*cos(4*_pi*h) )))"
+            "* (1 - sqrt( x /  (41 + ( (y^2 - 10*cos(4*_pi*y) ) + (z^2 - 10*cos(4*_pi*z) ) + (g^2 - 10*cos(4*_pi*g) ) +  (h^2 - 10*cos(4*_pi*h) ))) )) ";
+    v1 = 5;
+    v2 = 5;
+
+    nsga2 =  new  Nsga2(ui->spinBox->value(),ui->offspring->value(),ui->crossover->value(),ui->mutation->value(),ui->crossover_index->value(),ui->mutation_index->value(),str1,v1,str2,v2,min,max);
+    nsga2->init_population();
+    nsga2->evaluation();
+    nsga2->fast_non_dominated_sort();
+    nsga2->crowding_distance_assigment();
+
+    ui->textEdit->setText(QString().fromStdString(nsga2->toStringF1(f)));
+    qDebug() << "Inicjalizacja" << endl;
+    qDebug() << QString().fromStdString(nsga2->toStringF1(f)) << endl;
+
+    vector<double> y1 = nsga2->returnY1();
+    vector<double> y2 = nsga2->returnY2();
+
+    vector<double> y1f0 = nsga2->returnY1F0();
+    vector<double> y2f0 = nsga2->returnY2F0();
+
+    makePlot(y1, y2,y1f0,y2f0);
+}
+
+//Zitzler–Deb–Thiele's function N. 3
+void MainWindow::exe8()
+{
+    timer->stop();
+    init = 1;
+    if(nsga2 != NULL) delete nsga2;
+    ui->statusBar->showMessage(" Inicjalizacja populacji Zitzler–Deb–Thiele's function N. 3 ", 1000);
+
+    getRestrictions();
+
+
+    str1 = "x";
+    str2 = "  (1 + (9/29)*(y + z + g + h))  *  (1 - sqrt( x /( 1 + (9/29)*(y + z + g + h))) - (x /( 1 + (9/29)*(y + z + g + h))) * sin(10*_pi*x) )";
+    v1 = 5;
+    v2 = 5;
+
+    nsga2 =  new  Nsga2(ui->spinBox->value(),ui->offspring->value(),ui->crossover->value(),ui->mutation->value(),ui->crossover_index->value(),ui->mutation_index->value(),str1,v1,str2,v2,min,max);
+    nsga2->init_population();
+    nsga2->evaluation();
+    nsga2->fast_non_dominated_sort();
+    nsga2->crowding_distance_assigment();
+
+    ui->textEdit->setText(QString().fromStdString(nsga2->toStringF1(f)));
+    qDebug() << "Inicjalizacja" << endl;
+    qDebug() << QString().fromStdString(nsga2->toStringF1(f)) << endl;
+
+    vector<double> y1 = nsga2->returnY1();
+    vector<double> y2 = nsga2->returnY2();
+
+    vector<double> y1f0 = nsga2->returnY1F0();
+    vector<double> y2f0 = nsga2->returnY2F0();
+
+    makePlot(y1, y2,y1f0,y2f0);
+}
+
+//Zitzler–Deb–Thiele's function N. 2
+void MainWindow::exe7()
+{
+    timer->stop();
+    init = 1;
+    if(nsga2 != NULL) delete nsga2;
+    ui->statusBar->showMessage(" Inicjalizacja populacji Zitzler–Deb–Thiele's function N. 2 ", 1000);
+
+    getRestrictions();
+
+
+    str1 = "x";
+    str2 = "  (1 + (9/29)*(y + z + g + h))  *  (1 - ( x /( 1 + (9/29)*(y + z + g + h)))^2 )";
+    v1 = 5;
+    v2 = 5;
+
+    nsga2 =  new  Nsga2(ui->spinBox->value(),ui->offspring->value(),ui->crossover->value(),ui->mutation->value(),ui->crossover_index->value(),ui->mutation_index->value(),str1,v1,str2,v2,min,max);
+    nsga2->init_population();
+    nsga2->evaluation();
+    nsga2->fast_non_dominated_sort();
+    nsga2->crowding_distance_assigment();
+
+    ui->textEdit->setText(QString().fromStdString(nsga2->toStringF1(f)));
+    qDebug() << "Inicjalizacja" << endl;
+    qDebug() << QString().fromStdString(nsga2->toStringF1(f)) << endl;
+
+    vector<double> y1 = nsga2->returnY1();
+    vector<double> y2 = nsga2->returnY2();
+
+    vector<double> y1f0 = nsga2->returnY1F0();
+    vector<double> y2f0 = nsga2->returnY2F0();
+
+    makePlot(y1, y2,y1f0,y2f0);
+}
+
+//Zitzler–Deb–Thiele's function N. 1
+void MainWindow::exe6()
+{
+    timer->stop();
+    init = 1;
+    if(nsga2 != NULL) delete nsga2;
+    ui->statusBar->showMessage(" Inicjalizacja populacji Zitzler–Deb–Thiele's function N. 1 ", 1000);
+
+    getRestrictions();
+
+
+    str1 = "x";
+    str2 = "  (1 + (9/29)*(y + z + g + h))  *  (1 - sqrt( x /( 1 + (9/29)*(y + z + g + h))))";
+    v1 = 5;
+    v2 = 5;
+
+    nsga2 =  new  Nsga2(ui->spinBox->value(),ui->offspring->value(),ui->crossover->value(),ui->mutation->value(),ui->crossover_index->value(),ui->mutation_index->value(),str1,v1,str2,v2,min,max);
+    nsga2->init_population();
+    nsga2->evaluation();
+    nsga2->fast_non_dominated_sort();
+    nsga2->crowding_distance_assigment();
+
+    ui->textEdit->setText(QString().fromStdString(nsga2->toStringF1(f)));
+    qDebug() << "Inicjalizacja" << endl;
+    qDebug() << QString().fromStdString(nsga2->toStringF1(f)) << endl;
+
+    vector<double> y1 = nsga2->returnY1();
+    vector<double> y2 = nsga2->returnY2();
+
+    vector<double> y1f0 = nsga2->returnY1F0();
+    vector<double> y2f0 = nsga2->returnY2F0();
+
+    makePlot(y1, y2,y1f0,y2f0);
+}
+
+//Fonseca and Fleming function
+void MainWindow::exe5()
+{
+    timer->stop();
+    init = 1;
+    if(nsga2 != NULL) delete nsga2;
+    ui->statusBar->showMessage(" Inicjalizacja populacji Fonseca and Fleming function ", 1000);
+
+    getRestrictions();
+
+    str1 = " 1 - exp( -1*( (x - 1/sqrt(5))^2 + (y - 1/sqrt(5))^2 + (z - 1/sqrt(5))^2 + (g - 1/sqrt(5))^2 + (h - 1/sqrt(5))^2   )   )";
+    str2 = " 1 - exp( -1*( (x + 1/sqrt(5))^2 + (y + 1/sqrt(5))^2 + (z + 1/sqrt(5))^2 + (g + 1/sqrt(5))^2 + (h + 1/sqrt(5))^2   )   )";
+    v1 = 5;
+    v2 = 5;
+
+    nsga2 =  new  Nsga2(ui->spinBox->value(),ui->offspring->value(),ui->crossover->value(),ui->mutation->value(),ui->crossover_index->value(),ui->mutation_index->value(),str1,v1,str2,v2,min,max);
+    nsga2->init_population();
+    nsga2->evaluation();
+    nsga2->fast_non_dominated_sort();
+    nsga2->crowding_distance_assigment();
+
+    ui->textEdit->setText(QString().fromStdString(nsga2->toStringF1(f)));
+    qDebug() << "Inicjalizacja" << endl;
+    qDebug() << QString().fromStdString(nsga2->toStringF1(f)) << endl;
+
+    vector<double> y1 = nsga2->returnY1();
+    vector<double> y2 = nsga2->returnY2();
+
+    vector<double> y1f0 = nsga2->returnY1F0();
+    vector<double> y2f0 = nsga2->returnY2F0();
+
+    makePlot(y1, y2,y1f0,y2f0);
+}
+
+//Kursawe function:
+void MainWindow::exe4()
+{
+    timer->stop();
+    init = 1;
+    if(nsga2 != NULL) delete nsga2;
+    ui->statusBar->showMessage(" Inicjalizacja populacji Kursawe function ", 1000);
+
+
+    getRestrictions();
+
+    str1 = "-10*exp(-0.2*sqrt(x^2 + y^2)) -10*exp(-0.2*exp(-0.2*sqrt(y^2 + z^2))) ";
+    str2 = " abs(x)^0.8 + 5*sin(x^3) + abs(y)^0.8 + 5*sin(y^3) + abs(z)^0.8 + 5*sin(z^3)";
+    v1 = 3;
+    v2 = 3;
+
+    nsga2 =  new  Nsga2(ui->spinBox->value(),ui->offspring->value(),ui->crossover->value(),ui->mutation->value(),ui->crossover_index->value(),ui->mutation_index->value(),str1,v1,str2,v2,min,max);
+    nsga2->init_population();
+    nsga2->evaluation();
+    nsga2->fast_non_dominated_sort();
+    nsga2->crowding_distance_assigment();
+
+    ui->textEdit->setText(QString().fromStdString(nsga2->toStringF1(f)));
+    qDebug() << "Inicjalizacja" << endl;
+    qDebug() << QString().fromStdString(nsga2->toStringF1(f)) << endl;
+
+    vector<double> y1 = nsga2->returnY1();
+    vector<double> y2 = nsga2->returnY2();
+
+    vector<double> y1f0 = nsga2->returnY1F0();
+    vector<double> y2f0 = nsga2->returnY2F0();
+
+    makePlot(y1, y2,y1f0,y2f0);
+}
+
+//Poloni's two objective function:
+void MainWindow::exe3()
+{
+    timer->stop();
+    init = 1;
+    if(nsga2 != NULL) delete nsga2;
+    ui->statusBar->showMessage(" Inicjalizacja populacji Poloni's two objective function: ", 1000);
+
+    getRestrictions();
+
+    str1 = "1 + (0.87364 - (0.5*sin(x) - 2*cos(x) + sin(y)-1.5*cos(y)) )^2 + (2.7485 - (1.5*sin(x) - cos(x) + 2*sin(y) - 0.5*cos(y)) )^2";
+    str2 = "(x+3)^2 + (y+1)^2";
+    v1 = 2;
+    v2 = 2;
+
+    nsga2 =  new  Nsga2(ui->spinBox->value(),ui->offspring->value(),ui->crossover->value(),ui->mutation->value(),ui->crossover_index->value(),ui->mutation_index->value(),str1,v1,str2,v2,min,max);
+    nsga2->init_population();
+    nsga2->evaluation();
+    nsga2->fast_non_dominated_sort();
+    nsga2->crowding_distance_assigment();
+
+    ui->textEdit->setText(QString().fromStdString(nsga2->toStringF1(f)));
+    qDebug() << "Inicjalizacja" << endl;
+    qDebug() << QString().fromStdString(nsga2->toStringF1(f)) << endl;
+
+    vector<double> y1 = nsga2->returnY1();
+    vector<double> y2 = nsga2->returnY2();
+
+    vector<double> y1f0 = nsga2->returnY1F0();
+    vector<double> y2f0 = nsga2->returnY2F0();
+
+    makePlot(y1, y2,y1f0,y2f0);
+}
+
+//Schaffer function N. 1
+void MainWindow::exe2()
+{
+    timer->stop();
+    init = 1;
+    if(nsga2 != NULL) delete nsga2;
+    ui->statusBar->showMessage(" Inicjalizacja populacj Schaffer function N. 1: ", 1000);
+
+    getRestrictions();
+
+    str1 = "x^2";
+    str2 = "(x-2)^2";
+    v1 = 1;
+    v2 = 1;
+
+    nsga2 =  new  Nsga2(ui->spinBox->value(),ui->offspring->value(),ui->crossover->value(),ui->mutation->value(),ui->crossover_index->value(),ui->mutation_index->value(),str1,v1,str2,v2,min,max);
+    nsga2->init_population();
+    nsga2->evaluation();
+    nsga2->fast_non_dominated_sort();
+    nsga2->crowding_distance_assigment();
+
+    ui->textEdit->setText(QString().fromStdString(nsga2->toStringF1(f)));
+    qDebug() << "Inicjalizacja" << endl;
+    qDebug() << QString().fromStdString(nsga2->toStringF1(f)) << endl;
+
+    vector<double> y1 = nsga2->returnY1();
+    vector<double> y2 = nsga2->returnY2();
+
+    vector<double> y1f0 = nsga2->returnY1F0();
+    vector<double> y2f0 = nsga2->returnY2F0();
+
+    makePlot(y1, y2,y1f0,y2f0);
+}
+
+//Schaffer function N. 2
+void MainWindow::exe1()
+{
+    timer->stop();
+    init = 1;
+    if(nsga2 != NULL) delete nsga2;
+    ui->statusBar->showMessage(" Inicjalizacja populacji funkcja Schaffer function N. 2 ", 1000);
+
+    getRestrictions();
+
+    // (x>4)? (x-4): (100000000000000)
+
+    str1 = "(x<=1)? (-x) : ( (x>1 && x<=3)? (x-2): ( (x>3 && x<=4)? (4-x): ( (x>4)? (x-4): (100000000000000)     )))";
+    str2 = "(x-5)^2";
+    v1 = 2;
+    v2 = 2;
+
+    nsga2 =  new  Nsga2(ui->spinBox->value(),ui->offspring->value(),ui->crossover->value(),ui->mutation->value(),ui->crossover_index->value(),ui->mutation_index->value(),str1,v1,str2,v2,min,max);
+    nsga2->init_population();
+    nsga2->evaluation();
+    nsga2->fast_non_dominated_sort();
+    nsga2->crowding_distance_assigment();
+
+    ui->textEdit->setText(QString().fromStdString(nsga2->toStringF1(f)));
+    qDebug() << "Inicjalizacja" << endl;
+    qDebug() << QString().fromStdString(nsga2->toStringF1(f)) << endl;
+
+    vector<double> y1 = nsga2->returnY1();
+    vector<double> y2 = nsga2->returnY2();
+
+    vector<double> y1f0 = nsga2->returnY1F0();
+    vector<double> y2f0 = nsga2->returnY2F0();
+
+    makePlot(y1, y2,y1f0,y2f0);
+}
+
+void MainWindow::setRestrictions(vector<double> min, vector<double> max)
+{
+    ui->min_x->setValue(min[0]);
+    ui->min_y->setValue(min[1]);
+    ui->min_z->setValue(min[2]);
+    ui->min_g->setValue(min[3]);
+    ui->min_h->setValue(min[4]);
+
+    ui->max_x->setValue(max[0]);
+    ui->max_y->setValue(max[1]);
+    ui->max_z->setValue(max[2]);
+    ui->max_g->setValue(max[3]);
+    ui->max_h->setValue(max[4]);
+}
+
 void MainWindow::Init()
 {
     timer->stop();
     init = 1;
     if(nsga2 != NULL) delete nsga2;
     ui->statusBar->showMessage(" Inicjalizacja populacji ", 1000);
-    vector<double> Hmin = MIN();
-    vector<double> Hmax = MAX();
-    min.clear();
-    max.clear();
 
-    int i = 0, j = 0;
-    while(min.size() < ui->varebl_spin_f1->value())
-    {
-        min.push_back(Hmin[i]);
-        i++;
-    }
-    while(max.size() < ui->varebl_spin_f2->value())
-    {
-        max.push_back(Hmax[j]);
-        j++;
-    }
     str1 = ui->function1->text().toStdString();
     str2 = ui->function2->text().toStdString();
     v1 = ui->varebl_spin_f1->value();
     v2 = ui->varebl_spin_f2->value();
 
-    nsga2 =  new  Nsga2(ui->spinBox->value(),ui->crossover->value(),ui->crossover_index->value(),ui->mutation_index->value(),str1,v1,str2,v2,min,max);
+    getRestrictions();
+    nsga2 =  new  Nsga2(ui->spinBox->value(),ui->offspring->value(),ui->crossover->value(),ui->mutation->value(),ui->crossover_index->value(),ui->mutation_index->value(),str1,v1,str2,v2,min,max);
     nsga2->init_population();
     nsga2->evaluation();
     nsga2->fast_non_dominated_sort();
@@ -333,14 +607,24 @@ vector<double> MainWindow::MAX()
     return max;
 }
 
-
 void MainWindow::hide(QString s)
 {
     if(s != "Parser")
     {
         ui->Grup_Parser->hide();
-        ui->ograniczenia->hide();
         disconnect(ui->Init,SIGNAL(clicked()),this,SLOT(Init()));
+        disconnect(ui->Init,SIGNAL(clicked()),this,SLOT(exe1()));
+        disconnect(ui->Init,SIGNAL(clicked()),this,SLOT(exe2()));
+        disconnect(ui->Init,SIGNAL(clicked()),this,SLOT(exe3()));
+        disconnect(ui->Init,SIGNAL(clicked()),this,SLOT(exe4()));
+        disconnect(ui->Init,SIGNAL(clicked()),this,SLOT(exe5()));
+        disconnect(ui->Init,SIGNAL(clicked()),this,SLOT(exe6()));
+        disconnect(ui->Init,SIGNAL(clicked()),this,SLOT(exe7()));
+        disconnect(ui->Init,SIGNAL(clicked()),this,SLOT(exe8()));
+        disconnect(ui->Init,SIGNAL(clicked()),this,SLOT(exe9()));
+        disconnect(ui->Init,SIGNAL(clicked()),this,SLOT(exe10()));
+
+
     }
     else if( s == "Parser")
     {
@@ -349,21 +633,290 @@ void MainWindow::hide(QString s)
         connect(ui->Init,SIGNAL(clicked()),this,SLOT(Init()));
         disconnect(ui->Init,SIGNAL(clicked()),this,SLOT(exe1()));
         disconnect(ui->Init,SIGNAL(clicked()),this,SLOT(exe2()));
+        disconnect(ui->Init,SIGNAL(clicked()),this,SLOT(exe3()));
+        disconnect(ui->Init,SIGNAL(clicked()),this,SLOT(exe4()));
+        disconnect(ui->Init,SIGNAL(clicked()),this,SLOT(exe5()));
+        disconnect(ui->Init,SIGNAL(clicked()),this,SLOT(exe6()));
+        disconnect(ui->Init,SIGNAL(clicked()),this,SLOT(exe7()));
+        disconnect(ui->Init,SIGNAL(clicked()),this,SLOT(exe8()));
+        disconnect(ui->Init,SIGNAL(clicked()),this,SLOT(exe9()));
+        disconnect(ui->Init,SIGNAL(clicked()),this,SLOT(exe10()));
 
+
+
+        vector<double> Min,Max;
+        Min.push_back(-1);
+        Min.push_back(-1);
+        Min.push_back(0);
+        Min.push_back(0);
+        Min.push_back(0);
+
+        Max.push_back(6);
+        Max.push_back(6);
+        Max.push_back(0);
+        Max.push_back(0);
+        Max.push_back(0);
+
+        ui->varebl_spin_f1->setValue(2);
+        ui->varebl_spin_f2->setValue(2);
+
+        setRestrictions(Min,Max);
         return;
     }
 
-    if( s == "Binh and Korn")
+    if( s == "Schaffer function N. 2")
     {
         connect(ui->Init,SIGNAL(clicked()),this,SLOT(exe1()));
+        vector<double> Min,Max;
+        Min.push_back(-5);
+        Min.push_back(0);
+        Min.push_back(0);
+        Min.push_back(0);
+        Min.push_back(0);
+
+        Max.push_back(10);
+        Max.push_back(0);
+        Max.push_back(0);
+        Max.push_back(0);
+        Max.push_back(0);
+
+        ui->varebl_spin_f1->setValue(1);
+        ui->varebl_spin_f2->setValue(1);
+
+        setRestrictions(Min,Max);
     }
 
-    if( s == "Zitzler-Deb-Thiele's function N.1")
+    if( s == "Schaffer function N. 1")
     {
         connect(ui->Init,SIGNAL(clicked()),this,SLOT(exe2()));
+        vector<double> Min,Max;
+        Min.push_back(-10);
+        Min.push_back(0);
+        Min.push_back(0);
+        Min.push_back(0);
+        Min.push_back(0);
+
+        Max.push_back(10);
+        Max.push_back(0);
+        Max.push_back(0);
+        Max.push_back(0);
+        Max.push_back(0);
+
+        ui->varebl_spin_f1->setValue(1);
+        ui->varebl_spin_f2->setValue(1);
+
+        setRestrictions(Min,Max);
     }
+
+    if(s == "Poloni's two objective function")
+    {
+        connect(ui->Init,SIGNAL(clicked()),this,SLOT(exe3()));
+        vector<double> Min,Max;
+        Min.push_back(-3.1415);
+        Min.push_back(-3.1415);
+        Min.push_back(0);
+        Min.push_back(0);
+        Min.push_back(0);
+
+        Max.push_back(3.1415);
+        Max.push_back(3.1415);
+        Max.push_back(5);
+        Max.push_back(0);
+        Max.push_back(0);
+
+        ui->varebl_spin_f1->setValue(2);
+        ui->varebl_spin_f2->setValue(2);
+
+        setRestrictions(Min,Max);
+    }
+
+    if(s == "Kursawe function")
+    {
+        connect(ui->Init,SIGNAL(clicked()),this,SLOT(exe4()));
+
+        vector<double> Min,Max;
+        Min.push_back(-5);
+        Min.push_back(-5);
+        Min.push_back(-5);
+        Min.push_back(0);
+        Min.push_back(0);
+
+        Max.push_back(5);
+        Max.push_back(5);
+        Max.push_back(5);
+        Max.push_back(0);
+        Max.push_back(0);
+
+        ui->varebl_spin_f1->setValue(3);
+        ui->varebl_spin_f2->setValue(3);
+
+        setRestrictions(Min,Max);
+    }
+
+    if(s == "Fonseca and Fleming function")
+    {
+        connect(ui->Init,SIGNAL(clicked()),this,SLOT(exe5()));
+
+        vector<double> Min,Max;
+        Min.push_back(-4);
+        Min.push_back(-4);
+        Min.push_back(-4);
+        Min.push_back(-4);
+        Min.push_back(-4);
+
+        Max.push_back(4);
+        Max.push_back(4);
+        Max.push_back(4);
+        Max.push_back(4);
+        Max.push_back(4);
+
+        ui->varebl_spin_f1->setValue(5);
+        ui->varebl_spin_f2->setValue(5);
+
+        setRestrictions(Min,Max);
+    }
+
+    if(s == "Zitzler–Deb–Thiele's function N. 1")
+    {
+        connect(ui->Init,SIGNAL(clicked()),this,SLOT(exe6()));
+
+        vector<double> Min,Max;
+        Min.push_back(0);
+        Min.push_back(0);
+        Min.push_back(0);
+        Min.push_back(0);
+        Min.push_back(0);
+
+        Max.push_back(1);
+        Max.push_back(1);
+        Max.push_back(1);
+        Max.push_back(1);
+        Max.push_back(1);
+
+        ui->varebl_spin_f1->setValue(5);
+        ui->varebl_spin_f2->setValue(5);
+
+        setRestrictions(Min,Max);
+    }
+
+
+
+
+    if(s == "Zitzler–Deb–Thiele's function N. 2")
+    {
+        connect(ui->Init,SIGNAL(clicked()),this,SLOT(exe7()));
+
+        vector<double> Min,Max;
+        Min.push_back(0);
+        Min.push_back(0);
+        Min.push_back(0);
+        Min.push_back(0);
+        Min.push_back(0);
+
+        Max.push_back(1);
+        Max.push_back(1);
+        Max.push_back(1);
+        Max.push_back(1);
+        Max.push_back(1);
+
+        ui->varebl_spin_f1->setValue(5);
+        ui->varebl_spin_f2->setValue(5);
+
+        setRestrictions(Min,Max);
+    }
+
+    if(s == "Zitzler–Deb–Thiele's function N. 3")
+    {
+        connect(ui->Init,SIGNAL(clicked()),this,SLOT(exe8()));
+
+        vector<double> Min,Max;
+        Min.push_back(0);
+        Min.push_back(0);
+        Min.push_back(0);
+        Min.push_back(0);
+        Min.push_back(0);
+
+        Max.push_back(1);
+        Max.push_back(1);
+        Max.push_back(1);
+        Max.push_back(1);
+        Max.push_back(1);
+
+        ui->varebl_spin_f1->setValue(5);
+        ui->varebl_spin_f2->setValue(5);
+
+        setRestrictions(Min,Max);
+    }
+
+    if(s == "Zitzler–Deb–Thiele's function N. 4")
+    {
+        connect(ui->Init,SIGNAL(clicked()),this,SLOT(exe9()));
+
+        vector<double> Min,Max;
+        Min.push_back(0);
+        Min.push_back(-5);
+        Min.push_back(-5);
+        Min.push_back(-5);
+        Min.push_back(-5);
+
+        Max.push_back(1);
+        Max.push_back(5);
+        Max.push_back(5);
+        Max.push_back(5);
+        Max.push_back(5);
+
+        ui->varebl_spin_f1->setValue(5);
+        ui->varebl_spin_f2->setValue(5);
+
+        setRestrictions(Min,Max);
+    }
+
+    if(s == "Zitzler–Deb–Thiele's function N. 6")
+    {
+        connect(ui->Init,SIGNAL(clicked()),this,SLOT(exe10()));
+
+        vector<double> Min,Max;
+        Min.push_back(0);
+        Min.push_back(0);
+        Min.push_back(0);
+        Min.push_back(0);
+        Min.push_back(0);
+
+        Max.push_back(1);
+        Max.push_back(1);
+        Max.push_back(1);
+        Max.push_back(1);
+        Max.push_back(1);
+
+        ui->varebl_spin_f1->setValue(5);
+        ui->varebl_spin_f2->setValue(5);
+
+        setRestrictions(Min,Max);
+    }
+
+
+
 }
 
+void MainWindow::getRestrictions()
+{
+    vector<double> Hmin = MIN();
+    vector<double> Hmax = MAX();
+    min.clear();
+    max.clear();
+
+    int i = 0, j = 0;
+    while(min.size() < ui->varebl_spin_f1->value())
+    {
+        min.push_back(Hmin[i]);
+        i++;
+    }
+    while(max.size() < ui->varebl_spin_f2->value())
+    {
+        max.push_back(Hmax[j]);
+        j++;
+    }
+}
 
 void MainWindow::sortowanieY(QString s)
 {

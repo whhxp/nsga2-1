@@ -234,7 +234,7 @@ QGroupBox::title {
          </sizepolicy>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="tab_2">
          <attribute name="title">
@@ -250,12 +250,52 @@ QGroupBox::title {
             </item>
             <item>
              <property name="text">
-              <string>Zitzler-Deb-Thiele's function N.1</string>
+              <string>Schaffer function N. 1</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>Binh and Korn</string>
+              <string>Zitzler–Deb–Thiele's function N. 4</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Zitzler–Deb–Thiele's function N. 6</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Zitzler–Deb–Thiele's function N. 3</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Zitzler–Deb–Thiele's function N. 2</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Zitzler–Deb–Thiele's function N. 1</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Fonseca and Fleming function</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Kursawe function</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Poloni's two objective function</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Schaffer function N. 2</string>
              </property>
             </item>
            </widget>
@@ -316,6 +356,19 @@ QGroupBox::title {
                   </widget>
                  </item>
                  <item>
+                  <spacer name="horizontalSpacer">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
                   <layout class="QHBoxLayout" name="horizontalLayout_10">
                    <item>
                     <widget class="QLabel" name="label_8">
@@ -367,6 +420,19 @@ QGroupBox::title {
                   <string>(x-5)^2 + (y-5)^2</string>
                  </property>
                 </widget>
+               </item>
+               <item>
+                <spacer name="horizontalSpacer_2">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
                </item>
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_12">
@@ -457,6 +523,19 @@ QGroupBox::title {
                   </widget>
                  </item>
                  <item>
+                  <spacer name="verticalSpacer_9">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
                   <widget class="QDoubleSpinBox" name="min_x">
                    <property name="minimum">
                     <double>-100.000000000000000</double>
@@ -465,7 +544,7 @@ QGroupBox::title {
                     <double>100.000000000000000</double>
                    </property>
                    <property name="value">
-                    <double>0.000000000000000</double>
+                    <double>-1.000000000000000</double>
                    </property>
                   </widget>
                  </item>
@@ -487,6 +566,19 @@ QGroupBox::title {
                   </widget>
                  </item>
                  <item>
+                  <spacer name="verticalSpacer_10">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
                   <widget class="QDoubleSpinBox" name="max_x">
                    <property name="minimum">
                     <double>-100.000000000000000</double>
@@ -495,7 +587,7 @@ QGroupBox::title {
                     <double>100.000000000000000</double>
                    </property>
                    <property name="value">
-                    <double>5.000000000000000</double>
+                    <double>6.000000000000000</double>
                    </property>
                   </widget>
                  </item>
@@ -531,6 +623,19 @@ QGroupBox::title {
                   </widget>
                  </item>
                  <item>
+                  <spacer name="verticalSpacer_2">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
                   <widget class="QDoubleSpinBox" name="min_y">
                    <property name="minimum">
                     <double>-100.000000000000000</double>
@@ -539,7 +644,7 @@ QGroupBox::title {
                     <double>100.000000000000000</double>
                    </property>
                    <property name="value">
-                    <double>0.000000000000000</double>
+                    <double>-1.000000000000000</double>
                    </property>
                   </widget>
                  </item>
@@ -561,6 +666,22 @@ QGroupBox::title {
                   </widget>
                  </item>
                  <item>
+                  <spacer name="verticalSpacer">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeType">
+                    <enum>QSizePolicy::Minimum</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
                   <widget class="QDoubleSpinBox" name="max_y">
                    <property name="minimum">
                     <double>-100.000000000000000</double>
@@ -569,7 +690,7 @@ QGroupBox::title {
                     <double>100.000000000000000</double>
                    </property>
                    <property name="value">
-                    <double>5.000000000000000</double>
+                    <double>6.000000000000000</double>
                    </property>
                   </widget>
                  </item>
@@ -605,6 +726,19 @@ QGroupBox::title {
                   </widget>
                  </item>
                  <item>
+                  <spacer name="verticalSpacer_3">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
                   <widget class="QDoubleSpinBox" name="min_z">
                    <property name="minimum">
                     <double>-100.000000000000000</double>
@@ -633,6 +767,19 @@ QGroupBox::title {
                     <set>Qt::AlignCenter</set>
                    </property>
                   </widget>
+                 </item>
+                 <item>
+                  <spacer name="verticalSpacer_4">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
                  </item>
                  <item>
                   <widget class="QDoubleSpinBox" name="max_z">
@@ -679,6 +826,19 @@ QGroupBox::title {
                   </widget>
                  </item>
                  <item>
+                  <spacer name="verticalSpacer_5">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
                   <widget class="QDoubleSpinBox" name="min_g">
                    <property name="minimum">
                     <double>-100.000000000000000</double>
@@ -707,6 +867,19 @@ QGroupBox::title {
                     <set>Qt::AlignCenter</set>
                    </property>
                   </widget>
+                 </item>
+                 <item>
+                  <spacer name="verticalSpacer_6">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
                  </item>
                  <item>
                   <widget class="QDoubleSpinBox" name="max_g">
@@ -753,6 +926,19 @@ QGroupBox::title {
                   </widget>
                  </item>
                  <item>
+                  <spacer name="verticalSpacer_7">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
                   <widget class="QDoubleSpinBox" name="min_h">
                    <property name="minimum">
                     <double>-100.000000000000000</double>
@@ -781,6 +967,19 @@ QGroupBox::title {
                     <set>Qt::AlignCenter</set>
                    </property>
                   </widget>
+                 </item>
+                 <item>
+                  <spacer name="verticalSpacer_8">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
                  </item>
                  <item>
                   <widget class="QDoubleSpinBox" name="max_h">
@@ -869,17 +1068,44 @@ QGroupBox::title {
                     <number>5</number>
                    </property>
                    <property name="maximum">
-                    <number>100001</number>
+                    <number>500</number>
                    </property>
                    <property name="singleStep">
                     <number>0</number>
                    </property>
                    <property name="value">
-                    <number>150</number>
+                    <number>80</number>
                    </property>
                   </widget>
                  </item>
                 </layout>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_30">
+               <item>
+                <widget class="QLabel" name="label_25">
+                 <property name="text">
+                  <string>Potomstwo</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSpinBox" name="offspring">
+                 <property name="minimum">
+                  <number>20</number>
+                 </property>
+                 <property name="maximum">
+                  <number>500</number>
+                 </property>
+                 <property name="value">
+                  <number>80</number>
+                 </property>
+                </widget>
                </item>
               </layout>
              </item>
@@ -901,10 +1127,34 @@ QGroupBox::title {
                <item>
                 <widget class="QSpinBox" name="spinBox_2">
                  <property name="maximum">
-                  <number>500</number>
+                  <number>1000</number>
                  </property>
                  <property name="value">
-                  <number>45</number>
+                  <number>250</number>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_29">
+               <item>
+                <widget class="QLabel" name="label_24">
+                 <property name="text">
+                  <string>Mutacja</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QDoubleSpinBox" name="mutation">
+                 <property name="maximum">
+                  <double>1.000000000000000</double>
+                 </property>
+                 <property name="value">
+                  <double>0.200000000000000</double>
                  </property>
                 </widget>
                </item>
@@ -928,7 +1178,7 @@ QGroupBox::title {
                   <double>1.000000000000000</double>
                  </property>
                  <property name="value">
-                  <double>0.800000000000000</double>
+                  <double>0.900000000000000</double>
                  </property>
                 </widget>
                </item>
@@ -952,7 +1202,7 @@ QGroupBox::title {
                   <double>100.000000000000000</double>
                  </property>
                  <property name="value">
-                  <double>0.050000000000000</double>
+                  <double>2.000000000000000</double>
                  </property>
                 </widget>
                </item>
@@ -972,8 +1222,11 @@ QGroupBox::title {
                </item>
                <item>
                 <widget class="QDoubleSpinBox" name="crossover_index">
+                 <property name="maximum">
+                  <double>100.000000000000000</double>
+                 </property>
                  <property name="value">
-                  <double>0.700000000000000</double>
+                  <double>2.000000000000000</double>
                  </property>
                 </widget>
                </item>
