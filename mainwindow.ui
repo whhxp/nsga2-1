@@ -46,7 +46,7 @@ QGroupBox::title {
 }</string>
       </property>
       <property name="title">
-       <string>Wykres</string>
+       <string>Result plot</string>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_5">
        <item>
@@ -234,7 +234,7 @@ QGroupBox::title {
          </sizepolicy>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="tab_2">
          <attribute name="title">
@@ -1005,7 +1005,7 @@ QGroupBox::title {
         </widget>
         <widget class="QWidget" name="tab_3">
          <attribute name="title">
-          <string>Inicjalizacja</string>
+          <string>Initialization</string>
          </attribute>
          <layout class="QVBoxLayout" name="verticalLayout_10">
           <item>
@@ -1024,7 +1024,7 @@ QGroupBox::title {
 }</string>
             </property>
             <property name="title">
-             <string>Inicjalizacja populacji</string>
+             <string>Initialization of the population</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -1046,7 +1046,7 @@ QGroupBox::title {
                     <enum>QFrame::NoFrame</enum>
                    </property>
                    <property name="text">
-                    <string>Liczebność populacji</string>
+                    <string>Population</string>
                    </property>
                    <property name="textFormat">
                     <enum>Qt::RichText</enum>
@@ -1087,7 +1087,7 @@ QGroupBox::title {
                <item>
                 <widget class="QLabel" name="label_25">
                  <property name="text">
-                  <string>Potomstwo</string>
+                  <string>Offspring</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
@@ -1114,7 +1114,7 @@ QGroupBox::title {
                <item>
                 <widget class="QLabel" name="label_20">
                  <property name="text">
-                  <string>Iteracje dla populacji pareto</string>
+                  <string>Iterations population Pareto</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
@@ -1141,7 +1141,7 @@ QGroupBox::title {
                <item>
                 <widget class="QLabel" name="label_24">
                  <property name="text">
-                  <string>Mutacja</string>
+                  <string>Mutation</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
@@ -1165,7 +1165,7 @@ QGroupBox::title {
                <item>
                 <widget class="QLabel" name="label_23">
                  <property name="text">
-                  <string>Krzyżowanie</string>
+                  <string>Crossover</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
@@ -1189,7 +1189,7 @@ QGroupBox::title {
                <item>
                 <widget class="QLabel" name="label_21">
                  <property name="text">
-                  <string>Mutacja index</string>
+                  <string>Mutation index</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
@@ -1213,7 +1213,7 @@ QGroupBox::title {
                <item>
                 <widget class="QLabel" name="label_22">
                  <property name="text">
-                  <string>Krzyżowanie index</string>
+                  <string>Crossover index</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
@@ -1251,7 +1251,7 @@ QGroupBox::title {
      <x>0</x>
      <y>0</y>
      <width>991</width>
-     <height>25</height>
+     <height>17</height>
     </rect>
    </property>
   </widget>

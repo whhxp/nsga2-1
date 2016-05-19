@@ -46,6 +46,9 @@ public slots:
 protected slots:
     void makePlot(vector<double> y1, vector<double> y2, vector<double> y1f0, vector<double> y2f0);
 
+private slots:
+    void on_spinBox_2_editingFinished();
+
 private:
     void getRestrictions();
     void setRestrictions(vector<double> min, vector<double> max);

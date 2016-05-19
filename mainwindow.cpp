@@ -255,7 +255,7 @@ void MainWindow::exe4()
     timer->stop();
     init = 1;
     if(nsga2 != NULL) delete nsga2;
-    ui->statusBar->showMessage(" Inicjalizacja populacji Kursawe function ", 1000);
+    ui->statusBar->showMessage(" Initialization of the population Kursawe function ", 1000);
 
 
     getRestrictions();
@@ -272,7 +272,7 @@ void MainWindow::exe4()
     nsga2->crowding_distance_assigment();
 
     ui->textEdit->setText(QString().fromStdString(nsga2->toStringF1(f)));
-    qDebug() << "Inicjalizacja" << endl;
+    qDebug() << "Initialization" << endl;
     qDebug() << QString().fromStdString(nsga2->toStringF1(f)) << endl;
 
     vector<double> y1 = nsga2->returnY1();
@@ -408,7 +408,7 @@ void MainWindow::Init()
     timer->stop();
     init = 1;
     if(nsga2 != NULL) delete nsga2;
-    ui->statusBar->showMessage(" Inicjalizacja populacji ", 1000);
+    ui->statusBar->showMessage(" Initialization of the population ", 1000);
 
     str1 = ui->function1->text().toStdString();
     str2 = ui->function2->text().toStdString();
@@ -442,14 +442,14 @@ void MainWindow::Nsga()
 {
     if(nsga2 == NULL)
     {
-        ui->statusBar->showMessage(" Brak zainicjalizowanej populacji", 1000);
+        ui->statusBar->showMessage(" No initialized population", 1000);
         timer->stop();
 
         return;
     }
     else
     {
-    ui->statusBar->showMessage(" Realizacja algorytmu NSGA-II ",1000);
+    ui->statusBar->showMessage(" Implementation of the algorithm NSGA-II ",1000);
 
     try
     {
@@ -458,7 +458,7 @@ void MainWindow::Nsga()
     catch (exception &e)
     {
         qDebug() << QString().fromUtf8(e.what()) << endl;
-        qDebug() << "Bład" << endl;
+        qDebug() << "Error" << endl;
     }
 
     ui->textEdit->clear();
@@ -483,7 +483,7 @@ void MainWindow::Nsga()
          timer->stop();
          i = 0;
          QMessageBox dialog(this);
-         dialog.setText(" Osiągnięto zbiór pareto optymalny !!");
+         dialog.setText(" There has been a set of Pareto optimal !!");
          dialog.exec();
         }
         i++;
@@ -940,3 +940,8 @@ void MainWindow::sortowanieY(QString s)
 }
 
 
+
+void MainWindow::on_spinBox_2_editingFinished()
+{
+
+}
